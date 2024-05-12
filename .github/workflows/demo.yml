@@ -46,7 +46,7 @@ jobs:
       - name: Get build artifacts
         uses: actions/download-artifact@v4
         with:
-          name: desit-files
+          name: dist-files
       - name: Output contents
         run: ls
       - name: Deploy
