@@ -14,7 +14,9 @@ jobs:
         # it into the cache if cache did not have not folder before. so this step is also executed after the job.continue-on-error:
         # Also this cache is preserved across jobs and different workflow executions. how to exactly use this cache
         # depends upon which programming language you are using, this is setp for js.we need to add this step
-        # in all the jobs where we are installing the dependecies
+        # in all the jobs where we are installing the dependecies. also in ithub actions UI in job logs you can
+        # see a extra step PostCache dependecies which checks if this folder is in chache or , if not it adds it to cache
+        # also in logs you can see the details if it found that folder, it does not do anything
         uses: actions/cache@v3
         with:
           path: ~/.npm
@@ -67,7 +69,8 @@ jobs:
           # this describes the paths where files to be stored should be found. you can also exclude some files
           # to show how multiple files are stored under one name and how they are accessed, we will be using multiple files
           name: dist-files
-          # here we can mention multiple files also, which can be then donaloaded under same. we can also mention files which should
+          # Here we can mention the files which should be avaliable as artifacts
+          # Multiple files also, which can be then donaloaded under same. we can also mention files which should
           # not be included. we can also emntion list of file using | sign
           path: dist
         #   path: |
