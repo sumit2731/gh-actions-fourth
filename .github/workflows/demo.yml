@@ -32,9 +32,10 @@ jobs:
             dist-files # name is useful for retrieving these artifacts. especially if you want to do that automatically in susbsequent jobs
             # this describes the paths where files to be stored should be found. you can also exclude some files
             # to show how multiple files are stored under one name and how they are accessed, we will be using multiple files
-          path: |
-            dist
-            package.json
+        #   path: |
+        #     dist
+        #     package.json
+            path: dist
   deploy:
     needs: build
     runs-on: ubuntu-latest
