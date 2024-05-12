@@ -42,7 +42,7 @@ jobs:
         # older syntax for setting output value at steps level
         # run: find  dist/assets/*.js -type f -execdir echo '::set-output name=script-file::{}' ';'
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           # name is useful for retrieving these artifacts. especially if you want to do that automatically in susbsequent jobs
           # this describes the paths where files to be stored should be found. you can also exclude some files
