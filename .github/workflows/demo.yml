@@ -1,0 +1,43 @@
+name: Deploy website
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Install Dependecies
+        run: npm ci
+      #   - name: Lint code
+      #     run: npm run lint
+      - name: Test code
+        run: npm run test
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Install Dependecies
+        run: npm ci
+      - name: Build website
+        run: npm run build
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name:
+            dist-files # name is useful for retrieving these artifacts. especially if you want to do that automatically in susbsequent jobs
+            # this describes the paths where files to be stored should be found. you can also exclude some files
+            # to show how multiple files are stored under one name and how they are accessed, we will be using multiple files
+          path: |
+            dist
+            package.json
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        run: echo "Deploying"
