@@ -9,6 +9,20 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
+      - name: Cache dependencies
+        # this cache the dependencies. after the JOB this action will have a look at this folder (~/.npm) and put
+        # it into the cache if cache did not have not folder before. so this step is also executed after the job.continue-on-error:
+        # Also this cache is preserved across jobs and different workflow executions. how to exactly use this cache
+        # depends upon which programming language you are using, this is setp for js.we need to add this step
+        # in all the jobs where we are installing the dependecies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          # key is used to retreive the cache, when key chnages then cahe is discarded
+          # here we use anothe function provided by gihubAction which creates the hasj depending upon content of file passed to it
+          # here we used ** package-lock.json, so it collects all package-lock.json files and generates a hash
+          # on combination of these files
+          key: deps-node-modules-${{hashFiles('**/package-lock.json')}}
       - name: Install Dependecies
         run: npm ci
       #   - name: Lint code
@@ -24,6 +38,11 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: deps-node-modules-${{hashFiles('**/package-lock.json')}}
       - name: Install Dependecies
         run: npm ci
       - name: Build website
