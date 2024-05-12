@@ -38,7 +38,7 @@ jobs:
         # >> GITHUB_OUTPUT target a special file, a specuial created by github in envirenment in which your
         # job runs, where output key-value pair is return to. path of that file is in GITHUB_OUTPUT
         # this value can be accessed at job level via contsext - steps.[StepIdentifier.outputs].scriptFile
-        run: find dist/assets/*.js -type f -execdir echo "script-file={}" >> "GITHUB_OUTPUT" ";"
+        run: find dist/assets/*.js -type f -execdir echo "script-file={}" >> $GITHUB_OUTPUT ";"
         # older syntax for setting output value at steps level
         # run: find  dist/assets/*.js -type f -execdir echo '::set-output name=script-file::{}' ';'
       - name: Upload artifacts
