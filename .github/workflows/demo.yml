@@ -28,17 +28,26 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name:
-            dist-files # name is useful for retrieving these artifacts. especially if you want to do that automatically in susbsequent jobs
-            # this describes the paths where files to be stored should be found. you can also exclude some files
-            # to show how multiple files are stored under one name and how they are accessed, we will be using multiple files
+          # name is useful for retrieving these artifacts. especially if you want to do that automatically in susbsequent jobs
+          # this describes the paths where files to be stored should be found. you can also exclude some files
+          # to show how multiple files are stored under one name and how they are accessed, we will be using multiple files
+          name: dist-files
+          # here we can mention multiple files also, which can be then donaloaded under same. we can also mention files which should
+          # not be included. we can also emntion list of file using | sign
+          path: dist
         #   path: |
         #     dist
         #     package.json
-            path: dist
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Get build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: desit-files
+      - name: Output contents
+        run: ls
       - name: Deploy
         run: echo "Deploying"
